@@ -9,6 +9,7 @@ verify_ssl = true
 pytest = "==5.4.3"
 requests = "==2.24.0"
 responses = "==0.10.15"
+selenium = "*"
 
 [requires]
 python_version = "3.8"
