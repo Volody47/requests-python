@@ -1,4 +1,5 @@
 import pytest, requests, csv
+import requests
 
 # Exercise 2.1
 # Create a test data object test_data_zip
@@ -7,6 +8,11 @@ import pytest, requests, csv
 #           us -    90210 - Beverly Hills
 #           it -    50123 - Firenze
 #           ca -      Y1A - Whitehorse
+test_data_zip = [
+    ('us', '90210', 'Beverly Hills'),
+    ('it', '50123', 'Firenze'),
+    ('ca', 'Y1A', 'Whitehorse')
+]
 
 
 # Exercise 2.2
@@ -14,7 +20,11 @@ import pytest, requests, csv
 # a GET call to http://api.zippopotam.us/<country_code>/<zip_code>
 # and checks that the values for the 'place name' elements correspond
 # to those that are specified in the test data object
-
+@pytest.mark.parametrize("country, zip_code, city", test_data_zip)
+def test_check_response_body_equals_city(country, zip_code, city):
+    response = requests.get(f"http://api.zippopotam.us/{country}/{zip_code}")
+    response_body = response.json()
+    assert response_body['places'][0]['place name'] == city
 
 # Exercise 2.3
 # Create the same test data as above, but now in a .csv file, for example:
